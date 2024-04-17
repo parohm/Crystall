@@ -1,4 +1,5 @@
 import pyvisa
+print(1)
 
 class Agilent_n6701a(object):
     def __init__(self):
