@@ -1,1 +1,1 @@
-print(100000)
+print('Hello, world!')
