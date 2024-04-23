@@ -1,7 +1,7 @@
 import time
 
 temperature = '298K' # температура в формате '143K'
-cryst_number = '43' # номер кристалла в формате '1'
+cryst_number = '63' # номер кристалла в формате '1'
 
 
 
@@ -73,6 +73,8 @@ def rowcel_and_colsel_positions(rowcel_config: str, colcel_config: str):
         elif colcel_config[started_index] == '0':
             agilent_34980a.open_channel(channel=colsel_channels[started_index])
 
+        time.sleep(2)
+
 def open_all():
     for channel in [channel for channel in np.arange(1001, 1041, 1)]:
         agilent_34980a.open_channel(channel=channel)
@@ -125,6 +127,7 @@ def crystall_initial_state_new():
     agilent_34980a.open_channel(channel=arraysel_1_channel)
     agilent_34980a.open_channel(channel=arraysel_0_channel)
     agilent_34980a.open_channel(channel=ce_channel)
+    time.sleep(2)
 
     # 20, 21
     rohde_schwarz_2.channel_config(channel=3, voltage=0, current=0.001, output=True)
@@ -146,6 +149,7 @@ def crystall_initial_state_new():
 
 def test_82():
     crystall_initial_state_new()
+    time.sleep(2)
 
     agilent_34980a.open_channel(channel=arraysel_1_channel)
     agilent_34980a.open_channel(channel=arraysel_0_channel)
@@ -162,7 +166,8 @@ def test_82():
         for voltage in np.arange(0, 1801, 50):
             rohde_schwarz_1.channel_config(channel=2, voltage=voltage/1000, current=vdd_current, output=True)
 
-            time.sleep(1)
+            agilent_34980a.close_channel(channel=ce_channel)
+            time.sleep(2)
 
             blf_current = agilent_34980a.current_measurement(channel=blf_current_channel)
 
